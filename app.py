@@ -1,13 +1,15 @@
-import express from "express";
-import fetch from "node-fetch";
+import requests
 
-const app = express();
+def handler(request):
+    url = "https://raw.githubusercontent.com/SkibidiHub111/Ghoul/refs/heads/main/Ghoul"
+    response = requests.get(url)
+    if response.status_code == 200:
+        lua_code = response.text
+    else:
+        lua_code = "Error: Không thể tải file Lua từ URL"
 
-app.get("/", async (req, res) => {
-  const url = "https://raw.githubusercontent.com/SkibidiHub111/Ghoul/refs/heads/main/Ghoul";
-  const response = await fetch(url);
-  const lua_code = response.ok ? await response.text() : "Error: Không thể tải file Lua từ URL";
-  res.type("text/plain").send(lua_code);
-});
-
-app.listen(3000, () => console.log("Server running"));
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "text/plain"},
+        "body": lua_code
+    }
