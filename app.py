@@ -1,17 +1,13 @@
-from flask import Flask, Response
-import requests
+import express from "express";
+import fetch from "node-fetch";
 
-app = Flask(__name__)
+const app = express();
 
-@app.route('/')
-def lua_script():
-    url = "https://raw.githubusercontent.com/SkibidiHub111/Ghoul/refs/heads/main/Ghoul"
-    response = requests.get(url)
-    if response.status_code == 200:
-        lua_code = response.text
-    else:
-        lua_code = "Error: Không thể tải file Lua từ URL"
-    return Response(lua_code, mimetype='text/plain')
+app.get("/", async (req, res) => {
+  const url = "https://raw.githubusercontent.com/SkibidiHub111/Ghoul/refs/heads/main/Ghoul";
+  const response = await fetch(url);
+  const lua_code = response.ok ? await response.text() : "Error: Không thể tải file Lua từ URL";
+  res.type("text/plain").send(lua_code);
+});
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+app.listen(3000, () => console.log("Server running"));
