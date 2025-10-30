@@ -1,11 +1,11 @@
 {
   "version": 2,
   "functions": {
-    "api/**/*.py": {
+    "lua.py": {
       "runtime": "vercel-python@3.11"
     }
   },
   "routes": [
-    { "src": "/(.*)", "dest": "api/lua.py" }
+    { "src": "/(.*)", "dest": "lua.py" }
   ]
 }
